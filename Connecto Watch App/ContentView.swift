@@ -5,7 +5,7 @@ struct ContentView: View {
     @State private var ipAddress: String = ""
     @State private var port: String = ""
     @State private var endpoint: String = ""
-    @State private var method: String = "GET" // Default to GET
+    @State private var method: String = "GET"
     @State private var responseText: String = "Response will appear here..."
     @State private var keyValues: [KeyValue] = [KeyValue()]
     @State private var isMethodPickerPresented = false
@@ -13,7 +13,6 @@ struct ContentView: View {
     @State private var showResponse = false
 
     var body: some View {
-        // TabView to enable swipe navigation between pages
         TabView {
             HomeView()
                 .tabItem {
