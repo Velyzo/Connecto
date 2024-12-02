@@ -401,19 +401,25 @@ struct PresetsView: View {
 }
 
 struct InfoView: View {
+    let infoItems = [
+        ("Version", "1.0"),
+        ("Made by", "Eldritchy"),
+        ("Contact", "eldritchy.help@gmail.com")
+    ]
+    
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                Text("Information")
-                    .font(.title)
-                    .padding()
-
-                Text("This is the info page. Here you can find useful information about the app.")
-                    .padding()
-
-                Spacer()
+        NavigationView {
+            List(infoItems, id: \.0) { item in
+                HStack {
+                    Text(item.0)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Text(item.1)
+                        .foregroundColor(.gray)
+                }
+                .padding()
             }
-            .padding()
+            .navigationTitle("Info")
         }
     }
 }
