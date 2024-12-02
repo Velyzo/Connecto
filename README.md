@@ -1,6 +1,7 @@
 
 # **Connecto**  
-![Connecto Logo](https://github.com/wfxey/wfxey/blob/main/6.png?raw=true)
+<img src="https://github.com/wfxey/wfxey/blob/main/6.png?raw=true" alt="Connecto" width="300">
+
 
 **Connecto** is a lightweight and powerful app for Apple Watch, enabling you to interact with network resources on the go. With its intuitive interface, you can easily send and manage HTTP requests directly from your wrist, making it a must-have for tech enthusiasts and developers alike.
 
