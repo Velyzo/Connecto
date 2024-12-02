@@ -1,6 +1,6 @@
 <div align="center">
 
-# **🌐 Connecto**  
+# **🌐 Connecto 🌐**  
 
 <img src="https://github.com/wfxey/wfxey/blob/main/6.png?raw=true" alt="Connecto" width="130">
 
