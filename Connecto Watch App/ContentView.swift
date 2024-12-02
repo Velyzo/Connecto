@@ -1,5 +1,53 @@
 import SwiftUI
 
+struct KeyValue: Identifiable, Codable {
+    var id = UUID()
+    var key: String = ""
+    var value: String = ""
+}
+
+struct Preset: Identifiable, Codable {
+    let id: UUID
+    var name: String
+    var protocolType: String
+    var ipAddress: String
+    var port: String
+    var endpoint: String
+    var method: String
+    var keyValues: [KeyValue]
+}
+
+class PresetViewModel: ObservableObject {
+    @Published var presets: [Preset] = []
+    private let presetsKey = "SavedPresets"
+
+    init() {
+        loadPresets()
+    }
+
+    func savePresets() {
+        if let encoded = try? JSONEncoder().encode(presets) {
+            UserDefaults.standard.set(encoded, forKey: presetsKey)
+        }
+    }
+
+    private func loadPresets() {
+        if let data = UserDefaults.standard.data(forKey: presetsKey),
+           let decoded = try? JSONDecoder().decode([Preset].self, from: data) {
+            presets = decoded
+        }
+    }
+
+    func addPreset(_ preset: Preset) {
+        presets.append(preset)
+        savePresets()
+    }
+
+    func removePreset(at offsets: IndexSet) {
+        presets.remove(atOffsets: offsets)
+        savePresets()
+    }
+}
 struct ContentView: View {
     @State private var selectedProtocol: String = "http"
     @State private var ipAddress: String = ""
@@ -8,9 +56,8 @@ struct ContentView: View {
     @State private var method: String = "GET"
     @State private var responseText: String = "Response will appear here..."
     @State private var keyValues: [KeyValue] = [KeyValue()]
-    @State private var isMethodPickerPresented = false
-    @State private var isProtocolPickerPresented = false
     @State private var showResponse = false
+    @StateObject private var presetViewModel = PresetViewModel()
 
     var body: some View {
         TabView {
@@ -27,10 +74,26 @@ struct ContentView: View {
                 method: $method,
                 keyValues: $keyValues,
                 responseText: $responseText,
-                showResponse: $showResponse
+                showResponse: $showResponse,
+                presetViewModel: presetViewModel
             )
             .tabItem {
                 Label("Tool", systemImage: "wrench")
+            }
+
+            PresetsView(
+                presetViewModel: presetViewModel,
+                selectedProtocol: $selectedProtocol,
+                ipAddress: $ipAddress,
+                port: $port,
+                endpoint: $endpoint,
+                method: $method,
+                keyValues: $keyValues,
+                responseText: $responseText,
+                showResponse: $showResponse
+            )
+            .tabItem {
+                Label("Presets", systemImage: "list.bullet")
             }
 
             InfoView()
@@ -38,7 +101,6 @@ struct ContentView: View {
                     Label("Info", systemImage: "info.circle")
                 }
         }
-        .navigationTitle("Connecto")
     }
 }
 
@@ -70,9 +132,9 @@ struct ToolView: View {
     @Binding var responseText: String
     @Binding var showResponse: Bool
 
+    @ObservedObject var presetViewModel: PresetViewModel
     @State private var isProtocolPickerPresented = false
     @State private var isMethodPickerPresented = false
-    @State private var buttonScale: CGFloat = 1.0
 
     var body: some View {
         ScrollView {
@@ -81,9 +143,8 @@ struct ToolView: View {
                     .font(.title)
                     .padding()
 
-                Button(action: {
-                    isProtocolPickerPresented = true
-                }) {
+                // Protocol Picker
+                Button(action: { isProtocolPickerPresented = true }) {
                     HStack {
                         Text("Protocol: \(selectedProtocol.uppercased())")
                         Spacer()
@@ -106,9 +167,8 @@ struct ToolView: View {
                 InputSection(title: "Port (Optional)", placeholder: "e.g., 8080", text: $port)
                 InputSection(title: "Endpoint", placeholder: "/api/v1/resource", text: $endpoint)
 
-                Button(action: {
-                    isMethodPickerPresented = true
-                }) {
+                // Method Picker
+                Button(action: { isMethodPickerPresented = true }) {
                     HStack {
                         Text("Method: \(method)")
                         Spacer()
@@ -139,24 +199,33 @@ struct ToolView: View {
                                 TextField("Value", text: $keyValue.value)
                             }
                         }
-                        Button(action: addKeyValue) {
+                        Button(action: { keyValues.append(KeyValue()) }) {
                             Label("Add Pair", systemImage: "plus.circle")
                         }
                         .buttonStyle(.plain)
                     }
                 }
 
+                // Send Request Button
                 Button(action: sendRequest) {
                     Text("Send Request")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .foregroundColor(.white)
                         .font(.headline)
-                        .background(
-                            LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                        )
+                        .background(Color.blue)
                         .cornerRadius(15)
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 4)
+                }
+                .buttonStyle(.plain)
+
+                Button(action: savePreset) {
+                    Text("Save Preset")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .background(Color.green)
+                        .cornerRadius(15)
                 }
                 .buttonStyle(.plain)
 
@@ -175,23 +244,23 @@ struct ToolView: View {
             showResponse = true
             return
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = method
-        
+
         if method == "POST" || method == "PUT" {
             let jsonBody = keyValues.reduce(into: [String: String]()) { result, pair in
                 if !pair.key.isEmpty {
                     result[pair.key] = pair.value
                 }
             }
-            
+
             if let jsonData = try? JSONSerialization.data(withJSONObject: jsonBody, options: []) {
                 request.httpBody = jsonData
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             }
         }
-        
+
         URLSession.shared.dataTask(with: request) { data, _, error in
             DispatchQueue.main.async {
                 if let error = error {
@@ -210,61 +279,141 @@ struct ToolView: View {
         guard !ipAddress.isEmpty else {
             return nil
         }
-        
+
         var urlString = "\(selectedProtocol)://\(ipAddress)"
-        
         if !port.isEmpty {
             urlString += ":\(port)"
         }
-        
         urlString += endpoint
-        
         return URL(string: urlString)
     }
 
-    func addKeyValue() {
-        keyValues.append(KeyValue())
+    func savePreset() {
+        let newPreset = Preset(
+            id: UUID(),
+            name: "Preset \(Date())",
+            protocolType: selectedProtocol,
+            ipAddress: ipAddress,
+            port: port,
+            endpoint: endpoint,
+            method: method,
+            keyValues: keyValues
+        )
+        presetViewModel.addPreset(newPreset)
+    }
+}
+
+struct PresetsView: View {
+    @ObservedObject var presetViewModel: PresetViewModel
+    @Binding var selectedProtocol: String
+    @Binding var ipAddress: String
+    @Binding var port: String
+    @Binding var endpoint: String
+    @Binding var method: String
+    @Binding var keyValues: [KeyValue]
+    @Binding var responseText: String
+    @Binding var showResponse: Bool
+
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(presetViewModel.presets) { preset in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(preset.name)
+                                .font(.headline)
+                            Text("\(preset.protocolType)://\(preset.ipAddress):\(preset.port)\(preset.endpoint)")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        Button("Run") {
+                            loadPreset(preset)
+                            sendRequest()
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+                .onDelete(perform: presetViewModel.removePreset)
+            }
+            .navigationTitle("Presets")
+        }
+    }
+
+    func loadPreset(_ preset: Preset) {
+        selectedProtocol = preset.protocolType
+        ipAddress = preset.ipAddress
+        port = preset.port
+        endpoint = preset.endpoint
+        method = preset.method
+        keyValues = preset.keyValues
+    }
+
+    func sendRequest() {
+        guard let url = constructURL() else {
+            responseText = "Invalid URL"
+            showResponse = true
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+
+        if method == "POST" || method == "PUT" {
+            let jsonBody = keyValues.reduce(into: [String: String]()) { result, pair in
+                if !pair.key.isEmpty {
+                    result[pair.key] = pair.value
+                }
+            }
+
+            if let jsonData = try? JSONSerialization.data(withJSONObject: jsonBody, options: []) {
+                request.httpBody = jsonData
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            }
+        }
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            DispatchQueue.main.async {
+                if let error = error {
+                    responseText = "Error: \(error.localizedDescription)"
+                } else if let data = data {
+                    responseText = String(data: data, encoding: .utf8) ?? "Invalid response data"
+                } else {
+                    responseText = "Unknown error occurred"
+                }
+                showResponse = true
+            }
+        }.resume()
+    }
+
+    func constructURL() -> URL? {
+        guard !ipAddress.isEmpty else {
+            return nil
+        }
+
+        var urlString = "\(selectedProtocol)://\(ipAddress)"
+        if !port.isEmpty {
+            urlString += ":\(port)"
+        }
+        urlString += endpoint
+        return URL(string: urlString)
     }
 }
 
 struct InfoView: View {
-    let infoItems = [
-        ("Version", "1.0"),
-        ("Made by", "Eldritchy"),
-        ("Contact", "eldritchy.help@gmail.com")
-    ]
-    
     var body: some View {
-        NavigationView {
-            List(infoItems, id: \.0) { item in
-                HStack {
-                    Text(item.0)
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(item.1)
-                        .foregroundColor(.gray)
-                }
-                .padding()
+        ScrollView {
+            VStack(spacing: 16) {
+                Text("Information")
+                    .font(.title)
+                    .padding()
+
+                Text("This is the info page. Here you can find useful information about the app.")
+                    .padding()
+
+                Spacer()
             }
-            .navigationTitle("Info")
-        }
-    }
-}
-
-
-
-struct InputSection: View {
-    let title: String
-    let placeholder: String
-    @Binding var text: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(title).font(.subheadline)
-            TextField(placeholder, text: $text)
-                .padding(8)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
+            .padding()
         }
     }
 }
@@ -273,26 +422,34 @@ struct ResponseView: View {
     @Binding var responseText: String
 
     var body: some View {
+        ScrollView {
+            Text(responseText)
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+        }
+        .padding()
+    }
+}
+
+struct InputSection: View {
+    let title: String
+    let placeholder: String
+    @Binding var text: String
+
+    var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Response").font(.subheadline)
-            ScrollView {
-                Text(responseText)
-                    .font(.footnote)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-            }
+            Text(title)
+                .font(.subheadline)
+            TextField(placeholder, text: $text)
         }
     }
 }
 
-struct KeyValue: Identifiable {
-    let id = UUID()
-    var key: String = ""
-    var value: String = ""
-}
-
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
 
