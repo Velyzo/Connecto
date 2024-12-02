@@ -402,7 +402,7 @@ struct PresetsView: View {
 
 struct InfoView: View {
     let infoItems = [
-        ("Version", "1.0"),
+        ("Version", "1.1"),
         ("Made by", "Eldritchy"),
         ("Contact", "eldritchy.help@gmail.com")
     ]
