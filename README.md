@@ -23,7 +23,7 @@
 ## **📸 Screenshots and Details**
 
 ### **🏠 Home Screen**
-![Home Screen](https://github.com/wfxey/wfxey/blob/main/5.png?raw=true)  
+![Home Screen 1](https://github.com/wfxey/wfxey/blob/main/11t.png?raw=true)  
 
 When you launch **Connecto**, you're greeted with the **Home Screen**, which introduces you to the app's features. This welcome screen provides a brief overview and ensures a smooth start for new users.  
 > 💡 **Quick Tip**: Swipe to navigate to the main tool.
@@ -31,9 +31,9 @@ When you launch **Connecto**, you're greeted with the **Home Screen**, which int
 ---
 
 ### **🔧 Tool Screen**
-![Tool Screen 1](https://github.com/wfxey/wfxey/blob/main/3.png?raw=true)  
-![Tool Screen 2](https://github.com/wfxey/wfxey/blob/main/4.png?raw=true)  
-![Tool Screen 3](https://github.com/wfxey/wfxey/blob/main/2.png?raw=true)  
+![Tool Screen 1](https://github.com/wfxey/wfxey/blob/main/12t.png?raw=true)  
+![Tool Screen 2](https://github.com/wfxey/wfxey/blob/main/13t.png?raw=true)  
+![Tool Screen 3](https://github.com/wfxey/wfxey/blob/main/14t.png?raw=true)  
 
 The **Tool Screen** is where all the action happens. Configure your HTTP requests effortlessly by entering the following details:
 
@@ -46,9 +46,15 @@ The **Tool Screen** is where all the action happens. Configure your HTTP request
 🎯 This feature allows you to make real-time API calls directly from your Apple Watch. Whether testing endpoints or sending quick requests, Connecto ensures it’s all at your fingertips.  
 
 ---
+### **📞 Preset Screen**
+![Preset Screen 1](https://github.com/wfxey/wfxey/blob/main/15t.png?raw=true)
 
+🔗 Tired of typing everything new everytime you restart the App or want to change the connection, just create Presets!
+> **Note**: The Server Response will still display on the Tool Pages
+
+---
 ### **ℹ️ Info Screen**
-![Info Screen](https://github.com/wfxey/wfxey/blob/main/1.png?raw=true)  
+![Info Screen 1](https://github.com/wfxey/wfxey/blob/main/16t.png?raw=true)  
 
 The **Info Screen** provides key information about the app.  
 > **Note**: Not really important unless you want to contact us! 😅
@@ -71,7 +77,7 @@ The **Info Screen** provides key information about the app.
 
 ## **⚙️ Technical Details**
 - **Supported Methods**: `GET`, `POST`, `PUT`, `DELETE`.  
-- **Compatibility**: Apple Watch Series 6 and newer.  
+- **Compatibility**: Apple Watch Series 6 and newer. (Series 8 tested)
 - **Network Requirements**: Ensure your watch has internet connectivity via Wi-Fi or LTE.  
 
 ---
