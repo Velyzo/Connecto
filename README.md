@@ -95,7 +95,7 @@ This project is licensed under the **MIT License**. See the `LICENSE` file for m
 
 <div align="center">
 
-> **Connecto** - _Your gateway to network resources, right on your wrist!_  
+ **Connecto** - _Your gateway to network resources, right on your wrist!_  
 
 😄 _Thank you for using Connecto!_
 
