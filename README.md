@@ -31,9 +31,9 @@ When you launch **Connecto**, you're greeted with the **Home Screen**, which int
 ---
 
 ### **🔧 Tool Screen**
-![Tool Screen 1](https://github.com/wfxey/wfxey/blob/main/12t.png?raw=true)  
-![Tool Screen 2](https://github.com/wfxey/wfxey/blob/main/13t.png?raw=true)  
-![Tool Screen 3](https://github.com/wfxey/wfxey/blob/main/14t.png?raw=true)  
+![Tool Screen 1](https://github.com/VelisCore/Connecto/blob/main/preview/assets/Capture_d_écran_2025-02-06_à_17.28.29-removebg-preview.png?raw=true)  
+![Tool Screen 2](https://github.com/VelisCore/Connecto/blob/main/preview/assets/Capture_d_écran_2025-02-06_à_17.28.36-removebg-preview.png?raw=true)  
+![Tool Screen 3](https://github.com/VelisCore/Connecto/blob/main/preview/assets/Capture_d_écran_2025-02-06_à_17.28.42-removebg-preview.png?raw=true)  
 
 The **Tool Screen** is where all the action happens. Configure your HTTP requests effortlessly by entering the following details:
 
@@ -47,14 +47,14 @@ The **Tool Screen** is where all the action happens. Configure your HTTP request
 
 ---
 ### **📞 Preset Screen**
-![Preset Screen 1](https://github.com/wfxey/wfxey/blob/main/15t.png?raw=true)
+![Preset Screen 1](https://github.com/VelisCore/Connecto/blob/main/preview/assets/Capture_d_écran_2025-02-06_à_17.28.47-removebg-preview.png?raw=true)
 
 🔗 Tired of typing everything new everytime you restart the App or want to change the connection, just create Presets!
 > **Note**: The Server Response will still display on the Tool Pages
 
 ---
 ### **ℹ️ Info Screen**
-![Info Screen 1](https://github.com/wfxey/wfxey/blob/main/16t.png?raw=true)  
+![Info Screen 1](https://github.com/VelisCore/Connecto/blob/main/preview/assets/Capture_d_écran_2025-02-06_à_17.28.51-removebg-preview.png?raw=true)  
 
 The **Info Screen** provides key information about the app.  
 > **Note**: Not really important unless you want to contact us! 😅
