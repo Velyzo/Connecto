@@ -84,7 +84,7 @@ The **Info Screen** provides key information about the app.
 
 ## **📩 Support**
 If you encounter any issues or have feature requests, feel free to open an issue or contact us at:  
-📧 **eldritchy.help@gmail.com**  
+📧 **velis.help@gmail.com**  
 
 ---
 
