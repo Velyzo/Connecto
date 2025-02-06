@@ -23,7 +23,7 @@
 ## **📸 Screenshots and Details**
 
 ### **🏠 Home Screen**
-![Home Screen 1](https://github.com/wfxey/wfxey/blob/main/11t.png?raw=true)  
+![Home Screen 1](https://github.com/VelisCore/Connecto/blob/main/preview/assets/Capture_d_écran_2025-02-06_à_17.28.17-removebg-preview.png?raw=true)  
 
 When you launch **Connecto**, you're greeted with the **Home Screen**, which introduces you to the app's features. This welcome screen provides a brief overview and ensures a smooth start for new users.  
 > 💡 **Quick Tip**: Swipe to navigate to the main tool.
