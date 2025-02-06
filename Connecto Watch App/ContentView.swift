@@ -409,6 +409,7 @@ struct InfoView: View {
         ("Version", "1.2"),
         ("Made by", "Velis"),
         ("Website", "https://velis.me"),
+        ("GitHub", "https://github.com/veliscore"),
         ("Discord", "http://discord.velis.me"),
         ("Contact", "velis.help@gmail.com")
     ]
