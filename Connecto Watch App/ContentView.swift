@@ -107,13 +107,17 @@ struct ContentView: View {
 struct HomeView: View {
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            VStack() {
                 Text("Welcome to Connecto")
                     .font(.title)
-                    .padding()
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
 
-                Text("This is the home page. Use the 'Tool' tab to make network requests and explore other features.")
-                    .padding()
+                Text("🌐 This is the home page. Use the 'Tool' tab to make network requests and explore other features. 🛠️")
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding([.leading, .trailing])
 
                 Spacer()
             }
@@ -403,8 +407,10 @@ struct PresetsView: View {
 struct InfoView: View {
     let infoItems = [
         ("Version", "1.2"),
-        ("Made by", "VelisCore"),
-        ("Contact", "eldritchy.help@gmail.com")
+        ("Made by", "Velis"),
+        ("Website", "https://velis.me"),
+        ("Discord", "http://discord.velis.me"),
+        ("Contact", "velis.help@gmail.com")
     ]
     
     var body: some View {
