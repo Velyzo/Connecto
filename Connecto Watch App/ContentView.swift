@@ -406,7 +406,7 @@ struct PresetsView: View {
 
 struct InfoView: View {
     let infoItems = [
-        ("Version", "1.2"),
+        ("Version", "v2.3.0 FINAL"),
         ("Made by", "Velis"),
         ("Website", "https://velis.me"),
         ("GitHub", "https://github.com/veliscore"),
