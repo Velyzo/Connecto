@@ -1,13 +1,13 @@
 //
-//  Connecto_Watch_AppUITestsLaunchTests.swift
-//  Connecto Watch AppUITests
+//  ConnectoUITestsLaunchTests.swift
+//  ConnectoUITests
 //
 //  Created by Devin on 23.06.25.
 //
 
 import XCTest
 
-final class Connecto_Watch_AppUITestsLaunchTests: XCTestCase {
+final class ConnectoUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

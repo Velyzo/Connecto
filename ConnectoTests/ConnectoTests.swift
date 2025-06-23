@@ -1,14 +1,14 @@
 //
-//  Connecto_Watch_AppTests.swift
-//  Connecto Watch AppTests
+//  ConnectoTests.swift
+//  ConnectoTests
 //
 //  Created by Devin on 23.06.25.
 //
 
 import Testing
-@testable import Connecto_Watch_App
+@testable import Connecto
 
-struct Connecto_Watch_AppTests {
+struct ConnectoTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
