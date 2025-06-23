@@ -540,7 +540,6 @@ struct InputSection: View {
                 }
                 TextField(placeholder, text: $text)
                     .padding(10)
-                    .background(Color.white.opacity(0.6))
                     .cornerRadius(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
