@@ -70,6 +70,7 @@ struct ContentView: View {
     @State private var responseText: String = "Response will appear here..."
     @State private var keyValues: [KeyValue] = [KeyValue()]
     @State private var showResponse = false
+    @State private var isOutputPopupVisible = false
     @StateObject private var presetViewModel = PresetViewModel()
 
     var body: some View {
@@ -88,6 +89,7 @@ struct ContentView: View {
                 keyValues: $keyValues,
                 responseText: $responseText,
                 showResponse: $showResponse,
+                isOutputPopupVisible: $isOutputPopupVisible,
                 presetViewModel: presetViewModel
             )
             .tabItem {
@@ -103,7 +105,8 @@ struct ContentView: View {
                 method: $method,
                 keyValues: $keyValues,
                 responseText: $responseText,
-                showResponse: $showResponse
+                showResponse: $showResponse,
+                isOutputPopupVisible: $isOutputPopupVisible
             )
             .tabItem {
                 Label("Presets", systemImage: "list.bullet")
@@ -125,7 +128,7 @@ struct HomeView: View {
             
             ScrollView {
                 VStack(spacing: 24) {
-                    Image(systemName: "network.globe")
+                    Image(systemName: "globe")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 120, height: 120)
@@ -189,6 +192,7 @@ struct ToolView: View {
     @Binding var keyValues: [KeyValue]
     @Binding var responseText: String
     @Binding var showResponse: Bool
+    @Binding var isOutputPopupVisible: Bool
 
     @ObservedObject var presetViewModel: PresetViewModel
     @State private var isProtocolPickerPresented = false
@@ -331,16 +335,20 @@ struct ToolView: View {
                 }
                 .padding(.top, 12)
 
-                if showResponse {
-                    ResponseView(responseText: $responseText)
-                        .padding(.top, 8)
-                }
-                
                 Spacer()
             }
             .padding()
             .cornerRadius(25)
             .padding()
+            
+            if isOutputPopupVisible {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                    .transition(.opacity)
+                    .zIndex(1)
+                ResponseView(responseText: $responseText, isVisible: $isOutputPopupVisible)
+                    .zIndex(2)
+            }
         }
         #else
         ScrollView {
@@ -436,7 +444,7 @@ struct ToolView: View {
                 .buttonStyle(.plain)
 
                 if showResponse {
-                    ResponseView(responseText: $responseText)
+                    ResponseView(responseText: $responseText, isVisible: $isOutputPopupVisible)
                         .padding(.top, 16)
                 }
             }
@@ -449,6 +457,7 @@ struct ToolView: View {
         guard let url = constructURL() else {
             responseText = "Invalid URL"
             showResponse = true
+            isOutputPopupVisible = true
             return
         }
 
@@ -478,6 +487,7 @@ struct ToolView: View {
                     responseText = "Unknown error occurred"
                 }
                 showResponse = true
+                isOutputPopupVisible = true
             }
         }.resume()
     }
@@ -558,28 +568,39 @@ struct PresetsView: View {
     @Binding var keyValues: [KeyValue]
     @Binding var responseText: String
     @Binding var showResponse: Bool
+    @Binding var isOutputPopupVisible: Bool
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(presetViewModel.presets) { preset in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(preset.name)
-                                .font(.headline)
-                            Text("\(preset.protocolType)://\(preset.ipAddress):\(preset.port)\(preset.endpoint)")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+            ZStack {
+                List {
+                    ForEach(presetViewModel.presets) { preset in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(preset.name)
+                                    .font(.headline)
+                                Text("\(preset.protocolType)://\(preset.ipAddress):\(preset.port)\(preset.endpoint)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                            Button("Run") {
+                                loadPreset(preset)
+                                sendRequest()
+                            }
+                            .buttonStyle(.bordered)
                         }
-                        Spacer()
-                        Button("Run") {
-                            loadPreset(preset)
-                            sendRequest()
-                        }
-                        .buttonStyle(.bordered)
                     }
+                    .onDelete(perform: presetViewModel.removePreset)
                 }
-                .onDelete(perform: presetViewModel.removePreset)
+                if isOutputPopupVisible {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                        .transition(.opacity)
+                        .zIndex(1)
+                    ResponseView(responseText: $responseText, isVisible: $isOutputPopupVisible)
+                        .zIndex(2)
+                }
             }
             .navigationTitle("Presets")
         }
@@ -598,6 +619,7 @@ struct PresetsView: View {
         guard let url = constructURL() else {
             responseText = "Invalid URL"
             showResponse = true
+            isOutputPopupVisible = true
             return
         }
 
@@ -627,6 +649,7 @@ struct PresetsView: View {
                     responseText = "Unknown error occurred"
                 }
                 showResponse = true
+                isOutputPopupVisible = true
             }
         }.resume()
     }
@@ -649,7 +672,7 @@ struct InfoView: View {
     @AppStorage("syncEnabled") var syncEnabled = true
 
     let infoItems = [
-        ("Version", "v2.3.0 FINAL"),
+        ("Version", "v3.0.0 EXTENDED"),
         ("Made by", "Velis"),
         ("Website", "https://velis.me"),
         ("GitHub", "https://github.com/veliscore"),
@@ -688,16 +711,37 @@ struct InfoView: View {
 
 struct ResponseView: View {
     @Binding var responseText: String
+    @Binding var isVisible: Bool
 
     var body: some View {
-        ScrollView {
-            Text(responseText)
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        isVisible = false
+                    }
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.secondary)
+                        .padding()
+                }
+            }
+            ScrollView {
+                Text(responseText)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
-        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(.thinMaterial)
+                .shadow(radius: 20)
+        )
+        .padding(40)
+        .transition(.scale.combined(with: .opacity))
+        .animation(.easeInOut, value: isVisible)
     }
 }
 

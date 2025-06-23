@@ -549,7 +549,7 @@ struct InfoView: View {
     @AppStorage("syncEnabled") var syncEnabled = true
 
     let infoItems = [
-        ("Version", "v2.3.0 FINAL"),
+        ("Version", "v3.0.0 EXTENDED"),
         ("Made by", "Velis"),
         ("Website", "https://velis.me"),
         ("GitHub", "https://github.com/veliscore"),
