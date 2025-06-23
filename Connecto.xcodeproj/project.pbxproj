@@ -33,13 +33,6 @@
 			remoteGlobalIDString = 037C7D2E2E09B05B00C626D8;
 			remoteInfo = "Connecto Watch App";
 		};
-		03AFBCE72E0A03CA00AC0F8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 037C7D042E09B05900C626D8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 037C7D0B2E09B05A00C626D8;
-			remoteInfo = Connecto;
-		};
 		03AFBCE92E0A040300AC0F8D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 037C7D042E09B05900C626D8 /* Project object */;
@@ -48,6 +41,13 @@
 			remoteInfo = Connecto;
 		};
 		03AFBCEB2E0A040A00AC0F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 037C7D042E09B05900C626D8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 037C7D2E2E09B05B00C626D8;
+			remoteInfo = "Connecto Watch App";
+		};
+		03AFBCED2E0A0D5100AC0F8D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 037C7D042E09B05900C626D8 /* Project object */;
 			proxyType = 1;
@@ -207,6 +207,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				03AFBCEE2E0A0D5100AC0F8D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				037C7D0E2E09B05A00C626D8 /* Connecto */,
@@ -276,7 +277,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				03AFBCE82E0A03CA00AC0F8D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				037C7D332E09B05B00C626D8 /* Connecto Watch App */,
@@ -499,11 +499,6 @@
 			target = 037C7D2E2E09B05B00C626D8 /* Connecto Watch App */;
 			targetProxy = 03AFBCE42E0A037C00AC0F8D /* PBXContainerItemProxy */;
 		};
-		03AFBCE82E0A03CA00AC0F8D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 037C7D0B2E09B05A00C626D8 /* Connecto */;
-			targetProxy = 03AFBCE72E0A03CA00AC0F8D /* PBXContainerItemProxy */;
-		};
 		03AFBCEA2E0A040300AC0F8D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 037C7D0B2E09B05A00C626D8 /* Connecto */;
@@ -513,6 +508,11 @@
 			isa = PBXTargetDependency;
 			target = 037C7D2E2E09B05B00C626D8 /* Connecto Watch App */;
 			targetProxy = 03AFBCEB2E0A040A00AC0F8D /* PBXContainerItemProxy */;
+		};
+		03AFBCEE2E0A0D5100AC0F8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 037C7D2E2E09B05B00C626D8 /* Connecto Watch App */;
+			targetProxy = 03AFBCED2E0A0D5100AC0F8D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
