@@ -670,7 +670,7 @@ struct PresetsView: View {
 struct InfoView: View {
 
     let infoItems = [
-        ("Version", "v3.0.0 EXTENDED"),
+        ("Version", "v3.0.0 EXTENDED (24.6.2025) (only IOS)"),
         ("Made by", "Velis"),
         ("Website", "https://velis.me"),
         ("GitHub", "https://github.com/veliscore"),

@@ -1,4 +1,5 @@
 import SwiftUI
+internal import Combine
 
 struct KeyValue: Identifiable, Codable {
     var id = UUID()
@@ -406,7 +407,7 @@ struct PresetsView: View {
 
 struct InfoView: View {
     let infoItems = [
-        ("Version", "v2.3.0 FINAL"),
+        ("Version", "v2.3.0 FINAL (24.6.2025)"),
         ("Made by", "Velis"),
         ("Website", "https://velis.me"),
         ("GitHub", "https://github.com/veliscore"),
