@@ -2,8 +2,6 @@
 
 # ⌚ Connecto for Apple Watch  
 
-<img src="https://github.com/wfxey/wfxey/blob/main/watch-screenshot.png" alt="Connecto Apple Watch Screenshot" width="200">
-
 **Connecto for Apple Watch** delivers HTTP request management directly to your wrist. Whether you're testing endpoints or monitoring network resources, Connecto puts essential tools at your fingertips — anytime, anywhere.
 
 </div>
@@ -52,7 +50,7 @@ The **Tool Screen** is where all the action happens. Configure your HTTP request
 
 ---
 ### **ℹ️ Info Screen**
-![Info Screen Connecto Watch](https://github.com/VelisCore/Connecto/blob/main/preview/assets/w_i.png)  
+![Info Screen Connecto Watch](https://github.com/VelisCore/Connecto/blob/main/preview/assets/w_s.png)  
 
 The **Info Screen** provides key information about the app.  
 > **Note**: Not really important unless you want to contact us! 😅

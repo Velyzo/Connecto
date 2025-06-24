@@ -2,8 +2,6 @@
 
 # 📱 Connecto for iPhone  
 
-<img src="https://github.com/wfxey/wfxey/blob/main/ios-screenshot.png" alt="Connecto iOS Screenshot" width="250">
-
 **Connecto for iPhone** extends powerful HTTP request management to your mobile device. With a clean, touch-optimized interface, you can effortlessly interact with APIs, monitor services, or debug network issues — all from your pocket.
 
 </div>
@@ -53,7 +51,7 @@ The **Tool Screen** is where all the action happens. Configure your HTTP request
 
 ---
 ### **ℹ️ Info Screen**
-![Info Screen Connecto Phone](https://github.com/VelisCore/Connecto/blob/main/preview/assets/m_i.png)  
+![Info Screen Connecto Phone](https://github.com/VelisCore/Connecto/blob/main/preview/assets/m_s.png)  
 
 The **Info Screen** provides key information about the app.  
 > **Note**: Not really important unless you want to contact us! 😅
