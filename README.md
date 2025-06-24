@@ -69,6 +69,23 @@ This project benefits from cutting-edge AI tooling to ensure quality, stability,
 
 ---
 
+## ⚠️ Important Notice
+
+I do **not** own an Apple Developer Program license.  
+
+This means **Connecto is not available on the App Store**.  
+To use the app, you need to:
+
+- Download the source code from this repository.  
+- Build the project yourself using **Xcode**.  
+- Deploy it to your devices via Xcode or TestFlight (personal/free developer account required).  
+
+If you're unfamiliar with this process, please consult Apple's official developer documentation:
+
+[https://developer.apple.com/support/compare-memberships/](https://developer.apple.com/support/compare-memberships/)  
+
+---
+
 ## 🚀 Get Started
 
 Clone the repo, explore the sub-platform folders, and dive into the world of **Connecto**.  
