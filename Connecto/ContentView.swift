@@ -668,7 +668,6 @@ struct PresetsView: View {
 }
 
 struct InfoView: View {
-    @AppStorage("syncEnabled") var syncEnabled = true
 
     let infoItems = [
         ("Version", "v3.0.0 EXTENDED"),
@@ -682,14 +681,6 @@ struct InfoView: View {
     var body: some View {
         NavigationView {
             List {
-                Section {
-                    Toggle("Sync presets between Watch & iPhone", isOn: $syncEnabled)
-                    Text("Keep this ON to sync your saved presets between devices (recommended)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.top, 2)
-                }
-                
                 Section {
                     ForEach(infoItems, id: \.0) { item in
                         HStack {
