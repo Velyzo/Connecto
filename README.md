@@ -16,25 +16,43 @@
 
 ## ✨ Features
 
-- ⚡ Effortlessly configure HTTP requests.
-- 🔄 Supports multiple methods: **GET**, **POST**, **PUT**, **DELETE**.
-- 🔌 Seamlessly manage endpoints, ports, and protocols.
-- 🕶️ Compact yet functional design optimized for **Apple Watch** and **iPhone**.
-- 🎨 Intuitive, clean UI for both platforms.
-- 🛠️ Built with modern Apple technologies for performance and reliability.
+- ⚡ Effortlessly configure HTTP requests.  
+- 🔄 Supports multiple methods: **GET**, **POST**, **PUT**, **DELETE**.  
+- 🔌 Seamlessly manage endpoints, ports, and protocols.  
+- 🕶️ Compact yet functional design optimized for **Apple Watch** and **iPhone**.  
+- 🎨 Intuitive, clean UI for both platforms.  
+- 🛠️ Built with modern Apple technologies for performance and reliability.  
 
 ---
 
-## 📱 Platform-Specific Readmes
+## 📦 Platform-Specific Readmes
 
-- [📦 Apple Watch Version — WatchMD](./WatchMD/README.md)
-- [📦 iPhone Version — PhoneMD](/PhoneMD/README.md)
+- [📦 Apple Watch Version — WatchMD](./WatchMD/README.md)  
+- [📦 iPhone Version — PhoneMD](./PhoneMD/README.md)  
 
 ---
 
 ## 📚 Documentation Archives
 
-Additional technical documents, design notes, and in-depth development resources are available in the [**DocArchives**](./DocArchives) folder within this repository.
+Additional technical documents, design notes, and in-depth development resources are available in the [**DocArchives**](./DocArchives) folder within this repository.  
+
+---
+
+## 📋 Requirements
+
+- **iOS 26+** (Last checked: June 24, 2025)  
+  Supported Devices:  
+  - iPhone 15, iPhone 15 Plus, iPhone 15 Pro, iPhone 15 Pro Max  
+  - iPhone 16, iPhone 16 Plus, iPhone 16 Pro, iPhone 16 Pro Max  
+  - iPhone SE (4th generation, 2024)  
+
+- **watchOS 26+** (Last checked: June 24, 2025)  
+  Supported Devices:  
+  - Apple Watch Series 9  
+  - Apple Watch Ultra (1st & 2nd generation)  
+  - Apple Watch X  
+
+**Note:** Older devices that do not support iOS 26 or watchOS 26 are not compatible with Connecto.  
 
 ---
 
@@ -42,15 +60,15 @@ Additional technical documents, design notes, and in-depth development resources
 
 This project benefits from cutting-edge AI tooling to ensure quality, stability, and clean code:
 
-- 🤖 **GitHub Copilot** — for intelligent code suggestions and boilerplate reduction.
-- 🍏 **Apple Intelligence** — to enhance app integration and user experience on Apple platforms. Mainly helped me with XCode.
-- 🧩 **GitHub Models Playground** — for automated bug fixing, code quality analysis, and improving Markdown and documentation structure.
+- 🤖 **GitHub Copilot** — for intelligent code suggestions and boilerplate reduction.  
+- 🍏 **Apple Intelligence** — to enhance app integration and user experience on Apple platforms. Mainly helped me with Xcode.  
+- 🧩 **GitHub Models Playground** — for automated bug fixing, code quality analysis, and improving Markdown and documentation structure.  
 
 ---
 
 ## 🚀 Get Started
 
-Clone the repo, explore the sub-platform folders, and dive into the world of **Connecto**.
+Clone the repo, explore the sub-platform folders, and dive into the world of **Connecto**.  
 
 ```bash
 git clone https://github.com/VelisCore/connecto.git
