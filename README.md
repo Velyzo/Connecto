@@ -40,19 +40,22 @@ Additional technical documents, design notes, and in-depth development resources
 
 ## 📋 Requirements
 
-- **iOS 26+** (Last checked: June 24, 2025)  
-  Supported Devices:  
-  - iPhone 15, iPhone 15 Plus, iPhone 15 Pro, iPhone 15 Pro Max  
-  - iPhone 16, iPhone 16 Plus, iPhone 16 Pro, iPhone 16 Pro Max  
-  - iPhone SE (4th generation, 2024)  
+Connecto requires the latest operating systems and compatible hardware:
 
-- **watchOS 26+** (Last checked: June 24, 2025)  
-  Supported Devices:  
-  - Apple Watch Series 9  
-  - Apple Watch Ultra (1st & 2nd generation)  
-  - Apple Watch X  
+| Platform    | Minimum OS | Supported Devices                              |
+|-------------|------------|------------------------------------------------|
+| **iPhone**  | iOS 26+    | iPhone 13, 13 mini, 13 Pro, 13 Pro Max        |
+|             |            | iPhone 14, 14 Plus, 14 Pro, 14 Pro Max        |
+|             |            | iPhone 15, 15 Plus, 15 Pro, 15 Pro Max        |
+|             |            | iPhone 16, 16 Plus, 16 Pro, 16 Pro Max        |
+|             |            | iPhone SE (3rd generation and newer)          |
+| **Apple Watch** | watchOS 26+ | Apple Watch Series 8                       |
+|             |            | Apple Watch Series 9                          |
+|             |            | Apple Watch Ultra (1st & 2nd generation)      |
+|             |            | Apple Watch X                                 |
 
-**Note:** Older devices that do not support iOS 26 or watchOS 26 are not compatible with Connecto.  
+_Last compatibility check: June 24, 2025_  
+Older devices or OS versions are not supported.
 
 ---
 
