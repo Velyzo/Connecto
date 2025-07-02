@@ -408,27 +408,61 @@ struct PresetsView: View {
 struct InfoView: View {
     let infoItems = [
         ("Version", "v2.3.0 FINAL (24.6.2025)"),
-        ("Made by", "Velis"),
-        ("Website", "https://velis.me"),
-        ("GitHub", "https://github.com/veliscore"),
-        ("Discord", "http://discord.velis.me"),
-        ("Contact", "velis.help@gmail.com")
+        ("Made by", "Velyzo"),
+        ("Website", "https://velyzo.de"),
+        ("GitHub", "https://github.com/velyzo.de")
+        ("Contact", "mail@velyzo.de")
     ]
     
     var body: some View {
         NavigationView {
-            List(infoItems, id: \.0) { item in
-                HStack {
-                    Text(item.0)
-                        .fontWeight(.bold)
-                    Spacer()
-                    Text(item.1)
-                        .foregroundColor(.gray)
+            List {
+                Section {
+                    ForEach(infoItems, id: \.0) { item in
+                        HStack {
+                            Text(item.0)
+                                .fontWeight(.bold)
+                            Spacer()
+                            Text(item.1)
+                                .foregroundColor(.gray)
+                        }
+                    }
                 }
-                .padding()
+                
+                Section {
+                    NavigationLink(destination: PrivacyPolicyView()) {
+                        Text("Privacy Policy")
+                    }
+                }
             }
             .navigationTitle("Info")
         }
+    }
+}
+
+struct PrivacyPolicyView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Privacy Policy")
+                    .font(.headline)
+                    .padding(.bottom, 5)
+                
+                Text("Last updated: July 2, 2025")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                Text("Connecto stores all data locally on your device. No personal data is collected or shared.")
+                    .padding(.top, 5)
+                
+                Text("The app only requires internet access for your HTTP requests. These are sent directly to the endpoints you specify.")
+                
+                Text("Contact: mail@velyzo.de")
+                    .padding(.top, 5)
+            }
+            .padding()
+        }
+        .navigationTitle("Privacy Policy")
     }
 }
 

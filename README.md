@@ -36,6 +36,13 @@
 
 Additional technical documents, design notes, and in-depth development resources are available in the [**DocArchives**](./DocArchives) folder within this repository.  
 
+## 📜 Legal Information
+
+Connecto includes all necessary legal documents to comply with App Store requirements:
+
+- **Privacy Policy**: Available in the app under Settings → Privacy Policy
+- **Terms of Use**: Available in the app under Settings → Terms of Use
+
 ---
 
 ## 📋 Requirements
@@ -91,5 +98,5 @@ If you're unfamiliar with this process, please consult Apple's official develope
 Clone the repo, explore the sub-platform folders, and dive into the world of **Connecto**.  
 
 ```bash
-git clone https://github.com/VelisCore/connecto.git
+git clone https://github.com/Velyzo/connecto.git
 ```

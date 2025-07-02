@@ -668,14 +668,14 @@ struct PresetsView: View {
 }
 
 struct InfoView: View {
+    @Environment(\.openURL) private var openURL
 
     let infoItems = [
-        ("Version", "v3.0.0 EXTENDED (24.6.2025) (only IOS)"),
-        ("Made by", "Velis"),
-        ("Website", "https://velis.me"),
-        ("GitHub", "https://github.com/veliscore"),
-        ("Discord", "http://discord.velis.me"),
-        ("Contact", "velis.help@gmail.com")
+        ("Version", "v3.0.0 EXTENDED (only IOS)"),
+        ("Made by", "Velyzo"),
+        ("Website", "https://velyzo.de"),
+        ("GitHub", "https://github.com/velyzo.de"),
+        ("Contact", "mail@velyzo.de")
     ]
     
     var body: some View {
@@ -693,9 +693,145 @@ struct InfoView: View {
                         .padding(.vertical, 4)
                     }
                 }
+                
+                Section(header: Text("Legal")) {
+                    NavigationLink(destination: PrivacyPolicyView()) {
+                        HStack {
+                            Image(systemName: "hand.raised")
+                                .foregroundColor(.blue)
+                            Text("Privacy Policy")
+                        }
+                    }
+                    
+                    NavigationLink(destination: TermsOfUseView()) {
+                        HStack {
+                            Image(systemName: "doc.text")
+                                .foregroundColor(.blue)
+                            Text("Terms of Use")
+                        }
+                    }
+                }
             }
             .navigationTitle("Info")
         }
+    }
+}
+
+struct PrivacyPolicyView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Privacy Policy")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
+                
+                Group {
+                    Text("Last updated: July 2, 2025")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    Text("1. Introduction")
+                        .font(.headline)
+                    
+                    Text("This Privacy Policy informs you about the nature, scope, and purpose of the collection and use of personal data by the Connecto App.")
+                    
+                    Text("2. Responsible Person")
+                        .font(.headline)
+                    
+                    Text("The person responsible under data protection laws is:\n\nDevin Oldenburg\nEmail:mustang.oberhalb.7a@icloud.com \nWebsite: https://velyzo.de")
+                    
+                    Text("3. Data Collection in the App")
+                        .font(.headline)
+                    
+                    Text("The Connecto App stores all data locally on your device. We do not collect, store, or transfer any personal data to our servers or third parties. The network configurations and presets you enter are stored exclusively on your device in the UserDefaults database.")
+                }
+                
+                Group {
+                    Text("4. Network Requests")
+                        .font(.headline)
+                    
+                    Text("The app allows you to send HTTP requests to self-defined endpoints. These requests are sent directly from your device to your specified target endpoints. We have no access to the contents of these requests or their responses.")
+                    
+                    Text("5. Permissions")
+                        .font(.headline)
+                    
+                    Text("The app needs access to the internet to execute the HTTP requests you configure. No additional permissions are required or requested.")
+                    
+                    Text("6. Analytics and Crash Reporting")
+                        .font(.headline)
+                    
+                    Text("The app does not use any analytics or crash reporting tools and does not collect usage data.")
+                    
+                    Text("7. Changes to this Privacy Policy")
+                        .font(.headline)
+                    
+                    Text("We reserve the right to modify this Privacy Policy to ensure it always complies with current legal requirements or to implement changes to our services in the Privacy Policy, e.g., when introducing new features. The new Privacy Policy will then apply to your subsequent visits.")
+                }
+                
+                Group {
+                    Text("8. Contact")
+                        .font(.headline)
+                    
+                    Text("If you have questions about the collection, processing, or use of your personal data, for information, correction, blocking, or deletion of data, please contact:\n\nEmail: velis.help@gmail.com")
+                }
+            }
+            .padding()
+        }
+        .navigationTitle("Privacy Policy")
+    }
+}
+
+struct TermsOfUseView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Terms of Use")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
+                
+                Group {
+                    Text("Last updated: July 2, 2025")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    Text("1. Acceptance of Terms of Use")
+                        .font(.headline)
+                    
+                    Text("By using the Connecto App, you accept these Terms of Use in full. If you disagree with these terms, you must not use the app.")
+                    
+                    Text("2. Description of Services")
+                        .font(.headline)
+                    
+                    Text("Connecto is an app that allows you to send and manage HTTP requests. The app enables configuration and sending of HTTP requests to any endpoint.")
+                    
+                    Text("3. Usage Restrictions")
+                        .font(.headline)
+                    
+                    Text("You agree not to use the app for unlawful purposes or to infringe upon the rights of third parties. Use of the app is at your own risk.")
+                }
+                
+                Group {
+                    Text("4. Limitation of Liability")
+                        .font(.headline)
+                    
+                    Text("The app is provided \"as is\" and \"as available\" without any express or implied warranty. The developer assumes no liability for direct, indirect, incidental, or consequential damages resulting from the use of the app.")
+                    
+                    Text("5. Changes to the Terms of Use")
+                        .font(.headline)
+                    
+                    Text("The developer reserves the right to change these Terms of Use at any time. Continued use of the app after such changes constitutes your consent to the modified terms.")
+                    
+                    Text("6. Applicable Law")
+                        .font(.headline)
+                    
+                    Text("These Terms of Use are governed by the laws of the Federal Republic of Germany.")
+                }
+            }
+            .padding()
+        }
+        .navigationTitle("Terms of Use")
     }
 }
 
