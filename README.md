@@ -10,6 +10,10 @@
 
 ✨ *"Your gateway to network resources, right on your wrist and in your pocket!"*
 
+<br><br>
+
+[![Download on the App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/app/connecto/idYOUR_APP_ID)
+
 </div>
 
 ---
@@ -25,23 +29,15 @@
 
 ---
 
-## 📦 Platform-Specific Readmes
-
-- [📦 Apple Watch Version — WatchMD](./WatchMD/README.md)  
-- [📦 iPhone Version — PhoneMD](./PhoneMD/README.md)  
-
----
-
-## 📚 Documentation Archives
-
-Additional technical documents, design notes, and in-depth development resources are available in the [**DocArchives**](./DocArchives) folder within this repository.  
-
 ## 📜 Legal Information
 
 Connecto includes all necessary legal documents to comply with App Store requirements:
 
-- **Privacy Policy**: Available in the app under Settings → Privacy Policy
-- **Terms of Use**: Available in the app under Settings → Terms of Use
+- **[Privacy Policy](https://velyzo.github.io/connecto/privacy-policy)**: How we handle your data and protect your privacy
+- **[Terms of Service](https://velyzo.github.io/connecto/terms-of-service)**: Terms and conditions for using Connecto
+- **Support**: Available in the app under Settings → Support
+
+All documents are also accessible within the app for your convenience.
 
 ---
 
@@ -51,12 +47,12 @@ Connecto requires the latest operating systems and compatible hardware:
 
 | Platform    | Minimum OS | Supported Devices                              |
 |-------------|------------|------------------------------------------------|
-| **iPhone**  | iOS 26+    | iPhone 13, 13 mini, 13 Pro, 13 Pro Max        |
+| **iPhone**  | iOS 18.6+    | iPhone 13, 13 mini, 13 Pro, 13 Pro Max        |
 |             |            | iPhone 14, 14 Plus, 14 Pro, 14 Pro Max        |
 |             |            | iPhone 15, 15 Plus, 15 Pro, 15 Pro Max        |
 |             |            | iPhone 16, 16 Plus, 16 Pro, 16 Pro Max        |
 |             |            | iPhone SE (3rd generation and newer)          |
-| **Apple Watch** | watchOS 26+ | Apple Watch Series 8                       |
+| **Apple Watch** | watchOS 11.6+ | Apple Watch Series 8                       |
 |             |            | Apple Watch Series 9                          |
 |             |            | Apple Watch Ultra (1st & 2nd generation)      |
 |             |            | Apple Watch X                                 |
