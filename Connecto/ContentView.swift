@@ -656,17 +656,45 @@ struct ToolView: View {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    responseText = "Error: \(error.localizedDescription)"
+                    var errorMessage = "Error: \(error.localizedDescription)"
+                    
+                    // Check for specific ATS/TLS errors
+                    if error.localizedDescription.contains("App Transport Security") || 
+                       error.localizedDescription.contains("secure connection") {
+                        errorMessage += "\n\n💡 Tip: This error occurs because iOS requires HTTPS connections by default. If you need to connect to HTTP endpoints, make sure the Info.plist file is configured properly."
+                    } else if error.localizedDescription.contains("SSL") || 
+                              error.localizedDescription.contains("TLS") ||
+                              error.localizedDescription.contains("certificate") {
+                        errorMessage += "\n\n💡 Tip: This is a TLS/SSL certificate error. Check if:\n• The server certificate is valid\n• The domain matches the certificate\n• The certificate is not expired"  
+                    } else if error.localizedDescription.contains("connection") {
+                        errorMessage += "\n\n💡 Tip: Check your network connection and verify the server is accessible."
+                    }
+                    
+                    responseText = errorMessage
                 } else if let httpResponse = response as? HTTPURLResponse {
-                    var responseString = "Status: \(httpResponse.statusCode)\n\n"
+                    var responseString = "Status: \(httpResponse.statusCode)"
+                    
+                    // Add status code description
+                    let statusDescription = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
+                    responseString += " - \(statusDescription)\n\n"
+                    
+                    // Add headers for debugging
+                    if !httpResponse.allHeaderFields.isEmpty {
+                        responseString += "Headers:\n"
+                        for (key, value) in httpResponse.allHeaderFields {
+                            responseString += "\(key): \(value)\n"
+                        }
+                        responseString += "\n"
+                    }
+                    
                     if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                        responseString += formatResponse(dataString)
+                        responseString += "Body:\n\(formatResponse(dataString))"
                     } else {
                         responseString += "No response body or unable to decode"
                     }
                     responseText = responseString
                 } else if let data = data {
-                    responseText = formatResponse(String(data: data, encoding: .utf8) ?? "Invalid response data")
+                    responseText = "Response:\n\(formatResponse(String(data: data, encoding: .utf8) ?? "Invalid response data"))"
                 } else {
                     responseText = "Unknown error occurred"
                 }
@@ -911,17 +939,45 @@ struct PresetsView: View {
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    responseText = "Error: \(error.localizedDescription)"
+                    var errorMessage = "Error: \(error.localizedDescription)"
+                    
+                    // Check for specific ATS/TLS errors
+                    if error.localizedDescription.contains("App Transport Security") || 
+                       error.localizedDescription.contains("secure connection") {
+                        errorMessage += "\n\n💡 Tip: This error occurs because iOS requires HTTPS connections by default. If you need to connect to HTTP endpoints, make sure the Info.plist file is configured properly."
+                    } else if error.localizedDescription.contains("SSL") || 
+                              error.localizedDescription.contains("TLS") ||
+                              error.localizedDescription.contains("certificate") {
+                        errorMessage += "\n\n💡 Tip: This is a TLS/SSL certificate error. Check if:\n• The server certificate is valid\n• The domain matches the certificate\n• The certificate is not expired"  
+                    } else if error.localizedDescription.contains("connection") {
+                        errorMessage += "\n\n💡 Tip: Check your network connection and verify the server is accessible."
+                    }
+                    
+                    responseText = errorMessage
                 } else if let httpResponse = response as? HTTPURLResponse {
-                    var responseString = "Status: \(httpResponse.statusCode)\n\n"
+                    var responseString = "Status: \(httpResponse.statusCode)"
+                    
+                    // Add status code description
+                    let statusDescription = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
+                    responseString += " - \(statusDescription)\n\n"
+                    
+                    // Add headers for debugging
+                    if !httpResponse.allHeaderFields.isEmpty {
+                        responseString += "Headers:\n"
+                        for (key, value) in httpResponse.allHeaderFields {
+                            responseString += "\(key): \(value)\n"
+                        }
+                        responseString += "\n"
+                    }
+                    
                     if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                        responseString += formatResponse(dataString)
+                        responseString += "Body:\n\(formatResponse(dataString))"
                     } else {
                         responseString += "No response body or unable to decode"
                     }
                     responseText = responseString
                 } else if let data = data {
-                    responseText = formatResponse(String(data: data, encoding: .utf8) ?? "Invalid response data")
+                    responseText = "Response:\n\(formatResponse(String(data: data, encoding: .utf8) ?? "Invalid response data"))"
                 } else {
                     responseText = "Unknown error occurred"
                 }
