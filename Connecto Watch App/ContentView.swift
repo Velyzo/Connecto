@@ -407,10 +407,10 @@ struct PresetsView: View {
 
 struct InfoView: View {
     let infoItems = [
-        ("Version", "v2.3.0 FINAL (24.6.2025)"),
+        ("Version", "3.0.0 (Watch Edition)"),
         ("Made by", "Velyzo"),
         ("Website", "https://velyzo.de"),
-        ("GitHub", "https://github.com/velyzo.de")
+        ("GitHub", "https://github.com/velyzo"),
         ("Contact", "mail@velyzo.de")
     ]
     

@@ -671,7 +671,7 @@ struct InfoView: View {
     @Environment(\.openURL) private var openURL
 
     let infoItems = [
-        ("Version", "v3.0.0 EXTENDED (only IOS)"),
+        ("Version", "3.0.0 (EXTENDED Edition)"),
         ("Made by", "Velyzo"),
         ("Website", "https://velyzo.de"),
         ("GitHub", "https://github.com/velyzo.de"),
