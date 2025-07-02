@@ -164,123 +164,260 @@ struct ToolView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
-                // Protocol selector
-                Picker("Protocol", selection: $selectedProtocol) {
-                    Text("HTTP").tag("http")
-                    Text("HTTPS").tag("https")
+            VStack(spacing: 16) {
+                // Protocol selector - Compact segmented style
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Protocol")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    HStack(spacing: 4) {
+                        ForEach(["http", "https"], id: \.self) { protocolOption in
+                            Button(action: {
+                                selectedProtocol = protocolOption
+                            }) {
+                                Text(protocolOption.uppercased())
+                                    .font(.caption2)
+                                    .fontWeight(.medium)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 4)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(selectedProtocol == protocolOption ? Color.blue : Color.gray.opacity(0.2))
+                                    )
+                                    .foregroundColor(selectedProtocol == protocolOption ? .white : .primary)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
                 }
-                .pickerStyle(.wheel)
                 
                 // Host/IP input
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Host/IP")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
                     TextField("example.com", text: $ipAddress)
                         .textFieldStyle(.plain)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color.gray.opacity(0.1))
+                        )
                 }
                 
                 // Port input
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Port (Optional)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
                     TextField("8080", text: $port)
                         .textFieldStyle(.plain)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color.gray.opacity(0.1))
+                        )
                 }
                 
                 // Endpoint input
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Endpoint")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
                     TextField("/api/resource", text: $endpoint)
                         .textFieldStyle(.plain)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(Color.gray.opacity(0.1))
+                        )
                 }
                 
-                // Method selector
-                VStack(alignment: .leading) {
+                // Method selector - Grid layout for better space utilization
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Method")
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    Picker("Method", selection: $method) {
-                        Text("GET").tag("GET")
-                        Text("POST").tag("POST")
-                        Text("PUT").tag("PUT")
-                        Text("DELETE").tag("DELETE")
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 4) {
+                        ForEach(["GET", "POST", "PUT", "DELETE"], id: \.self) { methodOption in
+                            Button(action: {
+                                method = methodOption
+                            }) {
+                                Text(methodOption)
+                                    .font(.caption2)
+                                    .fontWeight(.medium)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 6)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(method == methodOption ? 
+                                                  getMethodColor(methodOption) : 
+                                                  Color.gray.opacity(0.2))
+                                    )
+                                    .foregroundColor(method == methodOption ? .white : .primary)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
-                    .pickerStyle(.wheel)
                 }
                 
                 // Body parameters for POST/PUT
                 if method == "POST" || method == "PUT" {
-                    VStack(alignment: .leading) {
-                        Text("Parameters")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text("Parameters")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                keyValues.append(KeyValue())
+                            }) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.caption)
+                                    .foregroundColor(.blue)
+                            }
+                            .buttonStyle(.plain)
+                        }
                         
                         ForEach($keyValues) { $keyValue in
-                            HStack {
-                                TextField("Key", text: $keyValue.key)
-                                    .textFieldStyle(.plain)
-                                    .frame(width: 70)
+                            VStack(spacing: 4) {
+                                HStack {
+                                    TextField("Key", text: $keyValue.key)
+                                        .textFieldStyle(.plain)
+                                        .font(.caption2)
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 4)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 4)
+                                                .fill(Color.blue.opacity(0.1))
+                                        )
+                                    
+                                    Button(action: {
+                                        if keyValues.count > 1 {
+                                            keyValues.removeAll { $0.id == keyValue.id }
+                                        }
+                                    }) {
+                                        Image(systemName: "minus.circle.fill")
+                                            .font(.caption2)
+                                            .foregroundColor(.red)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .opacity(keyValues.count > 1 ? 1 : 0)
+                                }
                                 
                                 TextField("Value", text: $keyValue.value)
                                     .textFieldStyle(.plain)
+                                    .font(.caption2)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 4)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 4)
+                                            .fill(Color.gray.opacity(0.1))
+                                    )
                             }
+                            .padding(.vertical, 2)
                         }
-                        
-                        Button(action: {
-                            keyValues.append(KeyValue())
-                        }) {
-                            Label("Add", systemImage: "plus")
-                                .font(.caption)
-                        }
-                        .buttonStyle(.bordered)
-                        .controlSize(.mini)
-                        .padding(.top, 2)
                     }
                 }
                 
-                // Send button
-                Button(action: sendRequest) {
-                    Text("Send Request")
-                        .fontWeight(.semibold)
+                // Action buttons
+                VStack(spacing: 8) {
+                    // Send button
+                    Button(action: sendRequest) {
+                        HStack {
+                            Image(systemName: "paperplane.fill")
+                                .font(.caption)
+                            Text("Send Request")
+                                .fontWeight(.semibold)
+                        }
                         .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.blue)
-                
-                // Save button
-                Button(action: savePreset) {
-                    Label("Save Preset", systemImage: "star")
-                        .font(.callout)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                        )
+                        .foregroundColor(.white)
+                    }
+                    .buttonStyle(.plain)
+                    
+                    // Save button
+                    Button(action: savePreset) {
+                        HStack {
+                            Image(systemName: "star.fill")
+                                .font(.caption)
+                            Text("Save Preset")
+                                .fontWeight(.medium)
+                        }
                         .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.blue, lineWidth: 1)
+                        )
+                        .foregroundColor(.blue)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.bordered)
                 
                 // Response section
                 if showResponse {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Response")
-                            .font(.headline)
-                            .padding(.top, 4)
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Image(systemName: "doc.text.fill")
+                                .font(.caption)
+                                .foregroundColor(.blue)
+                            Text("Response")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                showResponse = false
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                            .buttonStyle(.plain)
+                        }
                         
-                        Text(responseText)
-                            .font(.system(.caption2, design: .monospaced))
-                            .padding(8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(6)
+                        ScrollView {
+                            Text(responseText)
+                                .font(.system(.caption2, design: .monospaced))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Color.black.opacity(0.05))
+                                )
+                        }
+                        .frame(maxHeight: 120)
                     }
+                    .padding(.top, 8)
                 }
             }
-            .padding(.horizontal, 5)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
         }
     }
     
@@ -627,7 +764,7 @@ struct InfoView: View {
                 Text("Connecto")
                     .font(.headline)
                 
-                Text("Version 3.0.0")
+                Text("Version 1.0.0")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .padding(.bottom, 8)
@@ -751,4 +888,19 @@ struct TermsOfUseView: View {
         }
     }
 }
+
+private func getMethodColor(_ method: String) -> Color {
+        switch method {
+        case "GET":
+            return .green
+        case "POST":
+            return .blue
+        case "PUT":
+            return .orange
+        case "DELETE":
+            return .red
+        default:
+            return .gray
+        }
+    }
 
