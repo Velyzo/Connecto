@@ -1,4 +1,5 @@
 import SwiftUI
+import WatchKit
 internal import Combine
 
 struct KeyValue: Identifiable, Codable {
@@ -32,7 +33,7 @@ class PresetViewModel: ObservableObject {
         }
     }
 
-    private func loadPresets() {
+    func loadPresets() {
         if let data = UserDefaults.standard.data(forKey: presetsKey),
            let decoded = try? JSONDecoder().decode([Preset].self, from: data) {
             presets = decoded
@@ -50,226 +51,271 @@ class PresetViewModel: ObservableObject {
     }
 }
 struct ContentView: View {
-    @State private var selectedProtocol: String = "http"
-    @State private var ipAddress: String = ""
-    @State private var port: String = ""
-    @State private var endpoint: String = ""
-    @State private var method: String = "GET"
-    @State private var responseText: String = "Response will appear here..."
-    @State private var keyValues: [KeyValue] = [KeyValue()]
-    @State private var showResponse = false
     @StateObject private var presetViewModel = PresetViewModel()
 
     var body: some View {
         TabView {
+            // Home Tab
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "house")
+                    Label("Home", systemImage: "house.fill")
                 }
 
-            ToolView(
-                selectedProtocol: $selectedProtocol,
-                ipAddress: $ipAddress,
-                port: $port,
-                endpoint: $endpoint,
-                method: $method,
-                keyValues: $keyValues,
-                responseText: $responseText,
-                showResponse: $showResponse,
-                presetViewModel: presetViewModel
-            )
-            .tabItem {
-                Label("Tool", systemImage: "wrench")
-            }
+            // Tool Tab
+            ToolView(presetViewModel: presetViewModel)
+                .tabItem {
+                    Label("Tool", systemImage: "hammer.fill")
+                }
 
-            PresetsView(
-                presetViewModel: presetViewModel,
-                selectedProtocol: $selectedProtocol,
-                ipAddress: $ipAddress,
-                port: $port,
-                endpoint: $endpoint,
-                method: $method,
-                keyValues: $keyValues,
-                responseText: $responseText,
-                showResponse: $showResponse
-            )
-            .tabItem {
-                Label("Presets", systemImage: "list.bullet")
-            }
+            // Presets Tab
+            PresetsView(presetViewModel: presetViewModel)
+                .tabItem {
+                    Label("Presets", systemImage: "star.fill")
+                }
 
+            // Info Tab
             InfoView()
                 .tabItem {
-                    Label("Info", systemImage: "info.circle")
+                    Label("Info", systemImage: "info.circle.fill")
                 }
         }
+        .accentColor(.blue)
     }
 }
 
 struct HomeView: View {
     var body: some View {
         ScrollView {
-            VStack() {
-                Text("Welcome to Connecto")
-                    .font(.title)
+            VStack(spacing: 20) {
+                // App logo and title
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                           startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .frame(width: 70, height: 70)
+
+                    Image(systemName: "globe.americas.fill")
+                        .font(.system(size: 32))
+                        .foregroundColor(.white)
+                }
+                .padding(.top, 10)
+
+                Text("Connecto")
+                    .font(.title3)
                     .fontWeight(.bold)
-                    .foregroundColor(.primary)
 
-                Text("🌐 This is the home page. Use the 'Tool' tab to make network requests and explore other features. 🛠️")
-                    .font(.body)
+                Text("Network Tool")
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding([.leading, .trailing])
 
-                Spacer()
+                Divider()
+                    .padding(.vertical, 5)
+
+                // Features
+                VStack(alignment: .leading, spacing: 12) {
+                    FeatureRow(icon: "network", text: "Make HTTP requests")
+                    FeatureRow(icon: "star", text: "Save presets")
+                    FeatureRow(icon: "gear", text: "Custom parameters")
+                    FeatureRow(icon: "bolt", text: "Quick responses")
+                }
+                .padding(.horizontal)
+
+                Text("🌐 Tap the Tool tab to get started with your first request.")
+                    .font(.caption2)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+                    .padding()
             }
             .padding()
         }
     }
 }
 
-struct ToolView: View {
-    @Binding var selectedProtocol: String
-    @Binding var ipAddress: String
-    @Binding var port: String
-    @Binding var endpoint: String
-    @Binding var method: String
-    @Binding var keyValues: [KeyValue]
-    @Binding var responseText: String
-    @Binding var showResponse: Bool
-
-    @ObservedObject var presetViewModel: PresetViewModel
-    @State private var isProtocolPickerPresented = false
-    @State private var isMethodPickerPresented = false
+struct FeatureRow: View {
+    let icon: String
+    let text: String
 
     var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .foregroundColor(.blue)
+                .frame(width: 20)
+
+            Text(text)
+                .font(.subheadline)
+                .lineLimit(1)
+        }
+    }
+}
+
+struct ToolView: View {
+    @ObservedObject var presetViewModel: PresetViewModel
+    
+    @State private var selectedProtocol: String = "http"
+    @State private var ipAddress: String = ""
+    @State private var port: String = ""
+    @State private var endpoint: String = ""
+    @State private var method: String = "GET"
+    @State private var keyValues: [KeyValue] = [KeyValue()]
+    @State private var responseText: String = ""
+    @State private var showResponse = false
+    
+    var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
-                Text("Tool")
-                    .font(.title)
-                    .padding()
-
-                // Protocol Picker
-                Button(action: { isProtocolPickerPresented = true }) {
-                    HStack {
-                        Text("Protocol: \(selectedProtocol.uppercased())")
-                        Spacer()
-                        Image(systemName: "chevron.down")
+            VStack(spacing: 12) {
+                // Protocol selector
+                Picker("Protocol", selection: $selectedProtocol) {
+                    Text("HTTP").tag("http")
+                    Text("HTTPS").tag("https")
+                }
+                .pickerStyle(.wheel)
+                
+                // Host/IP input
+                VStack(alignment: .leading) {
+                    Text("Host/IP")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    TextField("example.com", text: $ipAddress)
+                        .textFieldStyle(.plain)
+                }
+                
+                // Port input
+                VStack(alignment: .leading) {
+                    Text("Port (Optional)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    TextField("8080", text: $port)
+                        .textFieldStyle(.plain)
+                }
+                
+                // Endpoint input
+                VStack(alignment: .leading) {
+                    Text("Endpoint")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    TextField("/api/resource", text: $endpoint)
+                        .textFieldStyle(.plain)
+                }
+                
+                // Method selector
+                VStack(alignment: .leading) {
+                    Text("Method")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Picker("Method", selection: $method) {
+                        Text("GET").tag("GET")
+                        Text("POST").tag("POST")
+                        Text("PUT").tag("PUT")
+                        Text("DELETE").tag("DELETE")
                     }
-                    .padding()
+                    .pickerStyle(.wheel)
                 }
-                .actionSheet(isPresented: $isProtocolPickerPresented) {
-                    ActionSheet(
-                        title: Text("Select Protocol"),
-                        buttons: [
-                            .default(Text("HTTP")) { selectedProtocol = "http" },
-                            .default(Text("HTTPS")) { selectedProtocol = "https" },
-                            .cancel()
-                        ]
-                    )
-                }
-
-                InputSection(title: "IP Address", placeholder: "e.g., 192.168.1.1", text: $ipAddress)
-                InputSection(title: "Port (Optional)", placeholder: "e.g., 8080", text: $port)
-                InputSection(title: "Endpoint", placeholder: "/api/v1/resource", text: $endpoint)
-
-                // Method Picker
-                Button(action: { isMethodPickerPresented = true }) {
-                    HStack {
-                        Text("Method: \(method)")
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                    }
-                    .padding()
-                }
-                .actionSheet(isPresented: $isMethodPickerPresented) {
-                    ActionSheet(
-                        title: Text("Select HTTP Method"),
-                        buttons: [
-                            .default(Text("GET")) { method = "GET" },
-                            .default(Text("POST")) { method = "POST" },
-                            .default(Text("PUT")) { method = "PUT" },
-                            .default(Text("DELETE")) { method = "DELETE" },
-                            .cancel()
-                        ]
-                    )
-                }
-
+                
+                // Body parameters for POST/PUT
                 if method == "POST" || method == "PUT" {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Request Key-Value Pairs")
-                            .font(.subheadline)
+                    VStack(alignment: .leading) {
+                        Text("Parameters")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
                         ForEach($keyValues) { $keyValue in
                             HStack {
                                 TextField("Key", text: $keyValue.key)
+                                    .textFieldStyle(.plain)
+                                    .frame(width: 70)
+                                
                                 TextField("Value", text: $keyValue.value)
+                                    .textFieldStyle(.plain)
                             }
                         }
-                        Button(action: { keyValues.append(KeyValue()) }) {
-                            Label("Add Pair", systemImage: "plus.circle")
+                        
+                        Button(action: {
+                            keyValues.append(KeyValue())
+                        }) {
+                            Label("Add", systemImage: "plus")
+                                .font(.caption)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
+                        .padding(.top, 2)
                     }
                 }
-
-                // Send Request Button
+                
+                // Send button
                 Button(action: sendRequest) {
                     Text("Send Request")
+                        .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .background(Color.blue)
-                        .cornerRadius(15)
                 }
-                .buttonStyle(.plain)
-
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
+                
+                // Save button
                 Button(action: savePreset) {
-                    Text("Save Preset")
+                    Label("Save Preset", systemImage: "star")
+                        .font(.callout)
                         .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .background(Color.green)
-                        .cornerRadius(15)
                 }
-                .buttonStyle(.plain)
-
+                .buttonStyle(.bordered)
+                
+                // Response section
                 if showResponse {
-                    ResponseView(responseText: $responseText)
-                        .padding(.top, 16)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Response")
+                            .font(.headline)
+                            .padding(.top, 4)
+                        
+                        Text(responseText)
+                            .font(.system(.caption2, design: .monospaced))
+                            .padding(8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(6)
+                    }
                 }
             }
-            .padding()
+            .padding(.horizontal, 5)
         }
     }
-
-    func sendRequest() {
+    
+    private func sendRequest() {
         guard let url = constructURL() else {
             responseText = "Invalid URL"
             showResponse = true
             return
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = method
-
+        
         if method == "POST" || method == "PUT" {
             let jsonBody = keyValues.reduce(into: [String: String]()) { result, pair in
                 if !pair.key.isEmpty {
                     result[pair.key] = pair.value
                 }
             }
-
+            
             if let jsonData = try? JSONSerialization.data(withJSONObject: jsonBody, options: []) {
                 request.httpBody = jsonData
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             }
         }
-
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if let error = error {
                     responseText = "Error: \(error.localizedDescription)"
+                } else if let httpResponse = response as? HTTPURLResponse {
+                    responseText = "Status: \(httpResponse.statusCode)"
+                    if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                        responseText += "\n\n" + dataString
+                    }
                 } else if let data = data {
                     responseText = String(data: data, encoding: .utf8) ?? "Invalid response data"
                 } else {
@@ -279,24 +325,34 @@ struct ToolView: View {
             }
         }.resume()
     }
-
-    func constructURL() -> URL? {
-        guard !ipAddress.isEmpty else {
-            return nil
-        }
-
+    
+    private func constructURL() -> URL? {
+        guard !ipAddress.isEmpty else { return nil }
+        
         var urlString = "\(selectedProtocol)://\(ipAddress)"
+        
         if !port.isEmpty {
             urlString += ":\(port)"
         }
-        urlString += endpoint
+        
+        // Ensure endpoint starts with "/"
+        var endpointString = endpoint
+        if !endpointString.isEmpty && !endpointString.hasPrefix("/") {
+            endpointString = "/" + endpointString
+        }
+        
+        urlString += endpointString
         return URL(string: urlString)
     }
-
-    func savePreset() {
-        let newPreset = Preset(
+    
+    private func savePreset() {
+        // Create formatter for time
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let preset = Preset(
             id: UUID(),
-            name: "Preset \(Date())",
+            name: "Preset \(formatter.string(from: Date()))",
             protocolType: selectedProtocol,
             ipAddress: ipAddress,
             port: port,
@@ -304,138 +360,344 @@ struct ToolView: View {
             method: method,
             keyValues: keyValues
         )
-        presetViewModel.addPreset(newPreset)
+        
+        presetViewModel.addPreset(preset)
+        
+        // Provide feedback
+        WKInterfaceDevice.current().play(.success)
     }
 }
 
 struct PresetsView: View {
     @ObservedObject var presetViewModel: PresetViewModel
-    @Binding var selectedProtocol: String
-    @Binding var ipAddress: String
-    @Binding var port: String
-    @Binding var endpoint: String
-    @Binding var method: String
-    @Binding var keyValues: [KeyValue]
-    @Binding var responseText: String
-    @Binding var showResponse: Bool
-
+    @State private var selectedPreset: Preset?
+    @State private var showingDetail = false
+    
     var body: some View {
-        NavigationView {
-            List {
+        List {
+            if presetViewModel.presets.isEmpty {
+                Text("No presets saved")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .listRowBackground(Color.clear)
+            } else {
                 ForEach(presetViewModel.presets) { preset in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(preset.name)
-                                .font(.headline)
-                            Text("\(preset.protocolType)://\(preset.ipAddress):\(preset.port)\(preset.endpoint)")
-                                .font(.subheadline)
+                    Button {
+                        selectedPreset = preset
+                        showingDetail = true
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(preset.name)
+                                    .font(.headline)
+                                    .lineLimit(1)
+                                
+                                Text("\(preset.method) \(preset.endpoint)")
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1)
+                            }
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
                                 .foregroundColor(.gray)
                         }
-                        Spacer()
-                        Button("Run") {
-                            loadPreset(preset)
-                            sendRequest()
-                        }
-                        .buttonStyle(.bordered)
                     }
+                    .listRowBackground(Color.gray.opacity(0.1))
                 }
                 .onDelete(perform: presetViewModel.removePreset)
             }
-            .navigationTitle("Presets")
+        }
+        .listStyle(.elliptical)
+        .sheet(isPresented: $showingDetail, content: {
+            if let preset = selectedPreset {
+                PresetDetailView(preset: preset)
+            }
+        })
+    }
+}
+
+struct PresetDetailView: View {
+    let preset: Preset
+    @State private var isLoading = false
+    @State private var response = ""
+    @State private var showResponse = false
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                // Preset name and method
+                HStack {
+                    Text(preset.name)
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    Text(preset.method)
+                        .font(.caption)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 2)
+                        .background(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(methodColor.opacity(0.2))
+                        )
+                        .foregroundColor(methodColor)
+                }
+                
+                Divider()
+                
+                // URL
+                Group {
+                    Text("URL")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Text("\(preset.protocolType)://\(preset.ipAddress)\(preset.port.isEmpty ? "" : ":\(preset.port)")\(preset.endpoint)")
+                        .font(.caption2)
+                        .lineLimit(2)
+                }
+                
+                // Parameters if any
+                if !preset.keyValues.isEmpty && preset.keyValues.first?.key.isEmpty == false {
+                    Divider()
+                    
+                    Text("Parameters")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    ForEach(preset.keyValues) { param in
+                        if !param.key.isEmpty {
+                            HStack {
+                                Text(param.key)
+                                    .font(.caption2)
+                                    .fontWeight(.medium)
+                                
+                                Spacer()
+                                
+                                Text(param.value)
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                }
+                
+                // Execute button
+                Button(action: executePreset) {
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                    } else {
+                        Text("Execute")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(isLoading)
+                .padding(.top, 8)
+                
+                // Response display
+                if showResponse {
+                    VStack(alignment: .leading) {
+                        Text("Response")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        Text(response)
+                            .font(.system(.caption2, design: .monospaced))
+                            .padding(6)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(6)
+                    }
+                    .padding(.top, 8)
+                }
+            }
+            .padding()
         }
     }
-
-    func loadPreset(_ preset: Preset) {
-        selectedProtocol = preset.protocolType
-        ipAddress = preset.ipAddress
-        port = preset.port
-        endpoint = preset.endpoint
-        method = preset.method
-        keyValues = preset.keyValues
+    
+    private var methodColor: Color {
+        switch preset.method {
+            case "GET":    return .blue
+            case "POST":   return .green
+            case "PUT":    return .orange
+            case "DELETE": return .red
+            default:       return .blue
+        }
     }
-
-    func sendRequest() {
+    
+    func executePreset() {
+        isLoading = true
+        showResponse = false
+        
         guard let url = constructURL() else {
-            responseText = "Invalid URL"
+            response = "Invalid URL"
             showResponse = true
+            isLoading = false
             return
         }
-
+        
         var request = URLRequest(url: url)
-        request.httpMethod = method
-
-        if method == "POST" || method == "PUT" {
-            let jsonBody = keyValues.reduce(into: [String: String]()) { result, pair in
+        request.httpMethod = preset.method
+        
+        if preset.method == "POST" || preset.method == "PUT" {
+            let jsonBody = preset.keyValues.reduce(into: [String: String]()) { result, pair in
                 if !pair.key.isEmpty {
                     result[pair.key] = pair.value
                 }
             }
-
+            
             if let jsonData = try? JSONSerialization.data(withJSONObject: jsonBody, options: []) {
                 request.httpBody = jsonData
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             }
         }
-
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        
+        URLSession.shared.dataTask(with: request) { data, httpResponse, error in
             DispatchQueue.main.async {
+                isLoading = false
+                
                 if let error = error {
-                    responseText = "Error: \(error.localizedDescription)"
+                    response = "Error: \(error.localizedDescription)"
+                } else if let httpResponse = httpResponse as? HTTPURLResponse {
+                    response = "Status: \(httpResponse.statusCode)"
+                    if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                        response += "\n\n" + dataString
+                    }
                 } else if let data = data {
-                    responseText = String(data: data, encoding: .utf8) ?? "Invalid response data"
+                    response = String(data: data, encoding: .utf8) ?? "Invalid response data"
                 } else {
-                    responseText = "Unknown error occurred"
+                    response = "Unknown error occurred"
                 }
+                
                 showResponse = true
             }
         }.resume()
     }
-
-    func constructURL() -> URL? {
-        guard !ipAddress.isEmpty else {
-            return nil
+    
+    private func constructURL() -> URL? {
+        var urlString = "\(preset.protocolType)://\(preset.ipAddress)"
+        
+        if !preset.port.isEmpty {
+            urlString += ":\(preset.port)"
         }
-
-        var urlString = "\(selectedProtocol)://\(ipAddress)"
-        if !port.isEmpty {
-            urlString += ":\(port)"
+        
+        // Ensure endpoint starts with "/"
+        var endpointString = preset.endpoint
+        if !endpointString.isEmpty && !endpointString.hasPrefix("/") {
+            endpointString = "/" + endpointString
         }
-        urlString += endpoint
+        
+        urlString += endpointString
         return URL(string: urlString)
+    }
+}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
 
 struct InfoView: View {
-    let infoItems = [
-        ("Version", "3.0.0 (Watch Edition)"),
-        ("Made by", "Velyzo"),
-        ("Website", "https://velyzo.de"),
-        ("GitHub", "https://github.com/velyzo"),
-        ("Contact", "mail@velyzo.de")
-    ]
+    @State private var showingPrivacyPolicy = false
+    @State private var showingTermsOfUse = false
     
     var body: some View {
-        NavigationView {
-            List {
-                Section {
-                    ForEach(infoItems, id: \.0) { item in
-                        HStack {
-                            Text(item.0)
-                                .fontWeight(.bold)
-                            Spacer()
-                            Text(item.1)
-                                .foregroundColor(.gray)
-                        }
-                    }
+        ScrollView {
+            VStack(spacing: 16) {
+                // App logo and version
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                          startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .frame(width: 60, height: 60)
+                    
+                    Image(systemName: "globe.americas.fill")
+                        .font(.system(size: 30))
+                        .foregroundColor(.white)
                 }
                 
-                Section {
-                    NavigationLink(destination: PrivacyPolicyView()) {
-                        Text("Privacy Policy")
-                    }
+                Text("Connecto")
+                    .font(.headline)
+                
+                Text("Version 3.0.0")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 8)
+                
+                // Info items
+                VStack(spacing: 8) {
+                    InfoItem(title: "Made by", value: "Velyzo")
+                    InfoItem(title: "Email", value: "mail@velyzo.de")
+                    InfoItem(title: "Website", value: "velyzo.de")
                 }
+                
+                Divider()
+                    .padding(.vertical, 8)
+                
+                // Legal links
+                VStack(spacing: 10) {
+                    Button(action: { showingPrivacyPolicy = true }) {
+                        HStack {
+                            Image(systemName: "hand.raised.fill")
+                                .foregroundColor(.blue)
+                            Text("Privacy Policy")
+                                .fontWeight(.medium)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    Button(action: { showingTermsOfUse = true }) {
+                        HStack {
+                            Image(systemName: "doc.text.fill")
+                                .foregroundColor(.blue)
+                            Text("Terms of Use")
+                                .fontWeight(.medium)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .buttonStyle(.bordered)
+                }
+                
+                Text("© 2025 Velyzo")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .padding(.top, 8)
             }
-            .navigationTitle("Info")
+            .padding()
+        }
+        .sheet(isPresented: $showingPrivacyPolicy) {
+            PrivacyPolicyView()
+        }
+        .sheet(isPresented: $showingTermsOfUse) {
+            TermsOfUseView()
+        }
+    }
+}
+
+struct InfoItem: View {
+    let title: String
+    let value: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            Spacer()
+            
+            Text(value)
+                .font(.caption)
+                .fontWeight(.medium)
         }
     }
 }
@@ -446,57 +708,47 @@ struct PrivacyPolicyView: View {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Privacy Policy")
                     .font(.headline)
-                    .padding(.bottom, 5)
+                    .padding(.bottom, 6)
                 
-                Text("Last updated: July 2, 2025")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
-                Text("Connecto stores all data locally on your device. No personal data is collected or shared.")
-                    .padding(.top, 5)
-                
-                Text("The app only requires internet access for your HTTP requests. These are sent directly to the endpoints you specify.")
-                
-                Text("Contact: mail@velyzo.de")
-                    .padding(.top, 5)
+                Group {
+                    Text("Last Updated: July 2, 2025")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Text("The app stores all data locally and doesn't collect any personal information. Network requests are sent directly to your specified endpoints.")
+                        .font(.caption2)
+                    
+                    Text("No analytics or crash reporting is used. For more information, contact: velis.help@gmail.com")
+                        .font(.caption2)
+                }
             }
             .padding()
         }
-        .navigationTitle("Privacy Policy")
     }
 }
 
-struct ResponseView: View {
-    @Binding var responseText: String
-
+struct TermsOfUseView: View {
     var body: some View {
         ScrollView {
-            Text(responseText)
-                .padding()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-        }
-        .padding()
-    }
-}
-
-struct InputSection: View {
-    let title: String
-    let placeholder: String
-    @Binding var text: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(title)
-                .font(.subheadline)
-            TextField(placeholder, text: $text)
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Terms of Use")
+                    .font(.headline)
+                    .padding(.bottom, 6)
+                
+                Group {
+                    Text("Last Updated: July 2, 2025")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    
+                    Text("By using Connecto, you agree not to use the app for unlawful purposes. The app is provided 'as is' without warranty.")
+                        .font(.caption2)
+                    
+                    Text("The developer assumes no liability for damages resulting from use of the app. These Terms are governed by the laws of Germany.")
+                        .font(.caption2)
+                }
+            }
+            .padding()
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
