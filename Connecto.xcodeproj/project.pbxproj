@@ -78,8 +78,18 @@
 		037C7D482E09B05C00C626D8 /* Connecto Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Connecto Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		033F6BFD2E15D7CF00F39B52 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 037C7D0B2E09B05A00C626D8 /* Connecto */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		037C7D0E2E09B05A00C626D8 /* Connecto */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Connecto; sourceTree = "<group>"; };
+		037C7D0E2E09B05A00C626D8 /* Connecto */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (033F6BFD2E15D7CF00F39B52 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Connecto; sourceTree = "<group>"; };
 		037C7D1C2E09B05B00C626D8 /* ConnectoTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConnectoTests; sourceTree = "<group>"; };
 		037C7D262E09B05B00C626D8 /* ConnectoUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConnectoUITests; sourceTree = "<group>"; };
 		037C7D332E09B05B00C626D8 /* Connecto Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Connecto Watch App"; sourceTree = "<group>"; };
@@ -687,6 +697,7 @@
 				INFOPLIST_FILE = Connecto/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Connecto;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2025 Velyzo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -720,6 +731,7 @@
 				INFOPLIST_FILE = Connecto/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Connecto;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "2025 Velyzo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
