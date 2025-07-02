@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecto - Legal Documents</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            background-color: #f5f5f7;
+        }
+        
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            color: white;
+            margin-top: 20px;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .legal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .legal-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #e8e8ed;
+        }
+        
+        .legal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .legal-card h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1d1d1f;
+        }
+        
+        .legal-card p {
+            color: #86868b;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .legal-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .app-info {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e8e8ed;
+        }
+        
+        .app-store-badge {
+            display: inline-block;
+            margin-top: 20px;
+        }
+        
+        .app-store-badge img {
+            height: 60px;
+            transition: transform 0.2s ease;
+        }
+        
+        .app-store-badge:hover img {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #86868b;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .legal-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Connecto</h1>
+            <p>Your gateway to network resources, right on your wrist and in your pocket</p>
+        </div>
+        
+        <div class="legal-grid">
+            <a href="privacy-policy.html" class="legal-card">
+                <span class="icon">🔒</span>
+                <h2>Privacy Policy</h2>
+                <p>Learn how Connecto protects your privacy and handles your data with complete transparency and security.</p>
+            </a>
+            
+            <a href="terms-of-service.html" class="legal-card">
+                <span class="icon">📋</span>
+                <h2>Terms of Service</h2>
+                <p>Review the terms and conditions that govern your use of Connecto and our services.</p>
+            </a>
+        </div>
+        
+        <div class="app-info">
+            <h2>Download Connecto</h2>
+            <p>Available on iPhone and Apple Watch</p>
+            <a href="https://apps.apple.com/app/connecto/idYOUR_APP_ID" class="app-store-badge">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2025 Velyzo. All rights reserved. Made with ❤️ for the Apple ecosystem.</p>
+        </div>
+    </div>
+</body>
+</html>
