@@ -721,11 +721,6 @@ struct PrivacyPolicyView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Privacy Policy")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 10)
-                
                 Group {
                     Text("Last updated: July 2, 2025")
                         .font(.subheadline)
@@ -786,11 +781,6 @@ struct TermsOfUseView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Terms of Use")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 10)
-                
                 Group {
                     Text("Last updated: July 2, 2025")
                         .font(.subheadline)
