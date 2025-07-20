@@ -90,10 +90,7 @@ struct HomeView: View {
                 // App logo and title
                 ZStack {
                     Circle()
-                        .fill(
-                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                           startPoint: .topLeading, endPoint: .bottomTrailing)
-                        )
+                        .fill(.blue)
                         .frame(width: 70, height: 70)
 
                     Image(systemName: "globe.americas.fill")
@@ -347,13 +344,7 @@ struct ToolView: View {
                         .padding(.vertical, 8)
                         .background(
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.8)]),
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .fill(.blue)
                         )
                         .foregroundColor(.white)
                     }
@@ -750,10 +741,7 @@ struct InfoView: View {
                 // App logo and version
                 ZStack {
                     Circle()
-                        .fill(
-                            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                          startPoint: .topLeading, endPoint: .bottomTrailing)
-                        )
+                        .fill(.blue)
                         .frame(width: 60, height: 60)
                     
                     Image(systemName: "globe.americas.fill")

@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Connecto",
+			"type": "shell",
+			"command": "xcodebuild",
+			"args": [
+				"-project",
+				"Connecto.xcodeproj",
+				"-scheme",
+				"Connecto",
+				"-destination",
+				"platform=iOS Simulator,name=iPhone 15",
+				"build"
+			],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			]
+		}
+	]
+}

@@ -640,7 +640,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.velyzo.Connecto.watchapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -671,7 +671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.velyzo.Connecto.watchapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -708,8 +708,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.velyzo.Connecto;
+MARKETING_VERSION = 2.0;
+PRODUCT_BUNDLE_IDENTIFIER = de.velyzo.Connecto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -744,16 +744,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.velyzo.Connecto;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				VALIDATE_PRODUCT = YES;
+MARKETING_VERSION = 2.0;
+PRODUCT_BUNDLE_IDENTIFIER = de.velyzo.Connecto;
+PRODUCT_NAME = "$(TARGET_NAME)";
+SDKROOT = iphoneos;
+SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+SUPPORTS_MACCATALYST = NO;
+SWIFT_EMIT_LOC_STRINGS = YES;
+SWIFT_VERSION = 5.0;
+TARGETED_DEVICE_FAMILY = 1;
+VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};

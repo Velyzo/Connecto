@@ -1,0 +1,38 @@
+{
+  "" : {
+    "diagnostics" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/Connecto Watch App-master.dia",
+    "emit-module-dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/Connecto Watch App-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/Connecto Watch App-master-emit-module.dia",
+    "swift-dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/Connecto Watch App-master.swiftdeps"
+  },
+  "/Users/devin/Documents/GitHub/Connecto/Connecto Watch App/ConnectoApp.swift" : {
+    "const-values" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp.swiftconstvalues",
+    "dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp.d",
+    "diagnostics" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp.dia",
+    "index-unit-output-path" : "/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp.o",
+    "llvm-bc" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp.bc",
+    "object" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp.o",
+    "swift-dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp.swiftdeps",
+    "swiftmodule" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ConnectoApp~partial.swiftmodule"
+  },
+  "/Users/devin/Documents/GitHub/Connecto/Connecto Watch App/ContentView.swift" : {
+    "const-values" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/devin/Documents/GitHub/Connecto/build/Connecto.build/Debug-iphoneos/Connecto Watch App.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

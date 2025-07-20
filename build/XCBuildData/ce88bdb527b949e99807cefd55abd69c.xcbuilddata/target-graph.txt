@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'Connecto' in project 'Connecto'
+➜ Explicit dependency on target 'Connecto Watch App' in project 'Connecto'
+Target 'Connecto Watch App' in project 'Connecto' (no dependencies)
